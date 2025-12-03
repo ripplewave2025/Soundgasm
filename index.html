@@ -3,491 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soundgasm | Professional Sound Rental Siliguri</title>
-    <meta name="description" content="Premium sound equipment rental in Siliguri. Simple packages, instant quotes, no login required.">
-    
-    <!-- Tailwind CSS -->
+    <title>Soundgasm | Premium Audio Rentals Siliguri</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Icons (Lucide) -->
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
-        
-        /* Explicit Layering to fix "Unclickable" issues */
-        .layer-bg { z-index: 0; }
-        .layer-overlay { z-index: 10; }
-        .layer-content { z-index: 20; position: relative; }
-        .layer-nav { z-index: 40; position: relative; }
-        .layer-popup { z-index: 50; }
+        /* Custom Font Assignments */
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, .serif-font { font-family: 'Playfair Display', serif; }
 
-        /* Hero Gradient */
-        .hero-overlay {
-            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.9) 100%);
+        /* Animation for the background zoom effect */
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        .animate-zoom {
+            animation: slowZoom 20s infinite alternate linear;
         }
 
-        /* Animations */
-        @keyframes slideUpFade {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Infinite Scroll Ticker Animation */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
-        .animate-enter {
-            animation: slideUpFade 0.4s ease-out forwards;
+        .animate-scroll {
+            animation: scroll 20s linear infinite;
         }
 
-        .typing-dot {
-            animation: typing 1.4s infinite ease-in-out both;
-            background-color: #9ca3af;
-            border-radius: 50%;
-            display: inline-block;
-            height: 6px;
-            margin-right: 3px;
-            width: 6px;
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-        
-        @keyframes typing {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
+
+        /* Button Glow */
+        .btn-glow:hover {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+        }
+
+        /* Booking Notification Slide In */
+        @keyframes slideInUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        .booking-popup {
+            animation: slideInUp 0.5s ease-out forwards;
+        }
+        .booking-popup.hiding {
+            animation: fadeOut 0.5s ease-out forwards;
+        }
+
+        /* New Liquid Glass Style for Popup */
+        .glass-popup {
+            background: rgba(255, 255, 255, 0.15); /* More transparent */
+            backdrop-filter: blur(16px); /* Stronger blur for liquid effect */
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow */
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-50 selection:bg-purple-500 selection:text-white">
+<body class="bg-gray-900 text-white overflow-x-hidden">
 
-    <!-- NAVIGATION -->
-    <nav class="absolute top-0 w-full layer-nav p-6 flex justify-between items-center text-white">
-        <div class="text-2xl font-bold tracking-tighter select-none cursor-pointer hover:text-purple-400 transition" onclick="window.scrollTo(0,0)">
-            SOUNDGASM
+    <!-- Navigation (Floating) -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-bold tracking-tighter text-white">
+                        SOUND<span class="text-indigo-500">GASM</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#" class="hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition">Packages</a>
+                        <a href="#" class="hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition">Custom Rig</a>
+                        <a href="#" class="hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition">Portfolio</a>
+                        <!-- REPLACE 919876543210 WITH YOUR REAL NUMBER BELOW -->
+                        <a href="https://wa.me/919876543210?text=I%20need%20some%20information%2C%20Call%20me" target="_blank" class="bg-white text-black hover:bg-indigo-50 px-4 py-2 rounded-full text-sm font-bold transition">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-300 hover:text-white focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                        <i data-lucide="menu" class="h-8 w-8"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="hidden md:flex space-x-8 text-sm font-medium">
-            <a href="#packages" class="hover:text-purple-400 transition">Packages</a>
-            <a href="#custom" class="hover:text-purple-400 transition">Custom Rig</a>
-            <a href="#contact" class="hover:text-purple-400 transition">Contact</a>
+        
+        <!-- Mobile Menu Panel -->
+        <div class="hidden md:hidden bg-black/95 backdrop-blur-md absolute w-full" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Packages</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Custom Rig</a>
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800">Portfolio</a>
+                <!-- Added Book Now to Mobile Menu as well -->
+                <a href="https://wa.me/919876543210?text=I%20need%20some%20information%2C%20Call%20me" target="_blank" class="block px-3 py-2 rounded-md text-base font-bold text-indigo-400 hover:bg-gray-800">Book Now</a>
+            </div>
         </div>
-        <a href="https://wa.me/917872392502" target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-full text-sm font-semibold transition flex items-center gap-2 shadow-lg hover:shadow-green-500/30">
-            <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
-        </a>
     </nav>
 
     <!-- HERO SECTION -->
-    <section class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden bg-slate-900">
+    <div class="relative h-screen flex flex-col justify-center overflow-hidden">
         
-        <!-- 1. Background Image (Layer 0) -->
-        <div class="absolute inset-0 layer-bg">
-            <img src="https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=2070&auto=format&fit=crop" 
-                 alt="Live Band Concert" 
-                 class="w-full h-full object-cover">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <!-- Using a wedding/event image to set local trust -->
+            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=2070&auto=format&fit=crop" 
+                 alt="Siliguri Wedding Event Sound System" 
+                 class="w-full h-full object-cover animate-zoom opacity-60">
+            <!-- Gradient Overlay for Readability -->
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-gray-900/30"></div>
+            <!-- Radial gradient for center focus -->
+            <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50"></div>
         </div>
 
-        <!-- 2. Dark Overlay (Layer 10) -->
-        <div class="absolute inset-0 layer-overlay hero-overlay"></div>
-
-        <!-- 3. Content (Layer 20 - Fully Clickable) -->
-        <div class="layer-content max-w-5xl mx-auto pt-12">
-            <div class="inline-block px-4 py-1 mb-6 border border-purple-500/50 rounded-full bg-purple-500/10 backdrop-blur-md text-purple-300 text-xs font-semibold tracking-wider uppercase">
-                Premium Audio Rental Siliguri
-            </div>
+        <!-- Main Content -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-10">
             
-            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight drop-shadow-2xl">
-                TURN UP THE <br class="md:hidden" /> <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">VOLUME</span>.
+            <!-- Headline -->
+            <h1 class="text-4xl md:text-7xl font-bold text-white mb-6 tracking-tight drop-shadow-lg">
+                Feel the Pulse of <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-300">Siliguri's Best Events</span>
             </h1>
-            
-            <p class="text-lg md:text-xl text-gray-300 mb-10 font-light max-w-2xl mx-auto leading-relaxed">
-                Crystal clear sound systems for weddings, clubs, and private gigs. 
-                <span class="text-white font-medium">Zero hassle, 100% vibe.</span>
+
+            <!-- Subheadline -->
+            <p class="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-gray-200 mb-8 md:mb-10 font-light px-4">
+                From intimate weddings at Marriott to raves at Hi-Spirits. <br class="hidden md:block">
+                Professional audio gear rentals delivered, setup, and tuned for perfection.
             </p>
-            
-            <div class="flex flex-col md:flex-row gap-5 justify-center items-center">
-                <!-- Primary Action -->
-                <a href="#packages" class="w-full md:w-auto bg-white text-slate-900 hover:bg-gray-100 px-8 py-4 rounded-full font-bold text-lg transition flex items-center justify-center gap-2 shadow-xl hover:scale-105 transform duration-200">
-                    View Packages <i data-lucide="arrow-down" class="w-5 h-5"></i>
+
+            <!-- CTAs -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-24 md:mb-16 px-6 sm:px-0">
+                <!-- Beginner CTA -->
+                <a href="#packages" class="btn-glow group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-indigo-600 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 w-full sm:w-auto">
+                    <i data-lucide="package" class="w-5 h-5 mr-2"></i>
+                    View Packages
+                    <span class="absolute -top-3 -right-3 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full animate-bounce">Most Popular</span>
                 </a>
-                
-                <!-- Chat Action (Fixed Clickability) -->
-                <button onclick="toggleChat(true)" class="w-full md:w-auto border-2 border-white/20 bg-white/5 hover:bg-white/10 hover:border-white text-white px-8 py-4 rounded-full font-semibold text-lg transition backdrop-blur-sm flex items-center justify-center gap-2 cursor-pointer">
-                    <i data-lucide="sparkles" class="w-5 h-5 text-purple-400"></i> Ask AI Assistant
-                </button>
+
+                <!-- Pro CTA -->
+                <a href="#custom" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white transition-all duration-200 bg-transparent border-2 border-white/30 rounded-full hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full sm:w-auto">
+                    <i data-lucide="sliders" class="w-5 h-5 mr-2"></i>
+                    Build Custom Rig
+                </a>
             </div>
         </div>
-    </section>
 
-    <!-- PACKAGES SECTION -->
-    <section id="packages" class="py-24 px-4 md:px-10 max-w-7xl mx-auto bg-slate-50 text-slate-900 rounded-t-[3rem] -mt-10 relative layer-content z-30">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">Simple Packages</h2>
-            <p class="text-gray-600">Choose the vibe that fits your event size. No confusing tech specs.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-            <!-- PACKAGE 1: SMALL -->
-            <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl overflow-hidden hover:-translate-y-2 transition duration-300 border border-gray-100 flex flex-col group">
-                <div class="h-56 bg-gray-200 relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Acoustic setup">
-                    <div class="absolute top-4 right-4 bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm">
-                        POPULAR
-                    </div>
-                </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <h3 class="text-2xl font-bold mb-2">Intimate Vibe</h3>
-                    <p class="text-sm text-gray-500 mb-6 uppercase tracking-wide font-semibold">House Parties & Acoustics</p>
+        <!-- BOTTOM BAR: How it works + Social Proof -->
+        <div class="absolute bottom-0 w-full z-20 glass-panel">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
                     
-                    <ul class="space-y-4 mb-8 flex-1 text-sm md:text-base text-gray-700">
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="speaker" class="w-5 h-5 text-purple-600 shrink-0"></i>
-                            2x Active PA Speakers
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="mic" class="w-5 h-5 text-purple-600 shrink-0"></i>
-                            1x Wired Mic & Stand
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="music" class="w-5 h-5 text-purple-600 shrink-0"></i>
-                            Mixer (AUX/Bluetooth)
-                        </li>
-                    </ul>
+                    <!-- LEFT: How It Works (Takes up 2/3 on large screens) -->
+                    <div class="col-span-1 lg:col-span-2 py-4 md:py-6 px-4 border-b lg:border-b-0 lg:border-r border-white/10">
+                        <p class="text-[10px] md:text-xs uppercase tracking-widest text-indigo-400 mb-2 md:mb-4 font-bold text-center lg:text-left">How It Works</p>
+                        <div class="flex justify-between items-center max-w-lg mx-auto lg:mx-0">
+                            <!-- Step 1 -->
+                            <div class="flex flex-col items-center text-center group">
+                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center mb-2 group-hover:bg-indigo-600 transition">
+                                    <i data-lucide="calendar" class="w-4 h-4 md:w-5 md:h-5 text-white"></i>
+                                </div>
+                                <span class="text-xs md:text-sm font-medium">Select Dates</span>
+                            </div>
+                            
+                            <!-- Arrow -->
+                            <div class="h-0.5 w-6 md:w-8 bg-white/20"></div>
 
-                    <div class="flex items-end justify-between border-t pt-6">
-                        <div>
-                            <span class="text-xs text-gray-500 uppercase font-semibold">Daily Rate</span>
-                            <div class="text-2xl font-bold text-gray-900">₹3,500</div>
+                            <!-- Step 2 -->
+                            <div class="flex flex-col items-center text-center group">
+                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center mb-2 group-hover:bg-indigo-600 transition">
+                                    <i data-lucide="speaker" class="w-4 h-4 md:w-5 md:h-5 text-white"></i>
+                                </div>
+                                <span class="text-xs md:text-sm font-medium">Choose Gear</span>
+                            </div>
+
+                            <!-- Arrow -->
+                            <div class="h-0.5 w-6 md:w-8 bg-white/20"></div>
+
+                            <!-- Step 3 -->
+                            <div class="flex flex-col items-center text-center group">
+                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center mb-2 group-hover:bg-indigo-600 transition">
+                                    <i data-lucide="truck" class="w-4 h-4 md:w-5 md:h-5 text-white"></i>
+                                </div>
+                                <span class="text-xs md:text-sm font-medium">We Deliver</span>
+                            </div>
                         </div>
-                        <a href="https://wa.me/917872392502?text=I'm%20interested%20in%20the%20Small%20Intimate%20package" target="_blank" class="bg-gray-900 text-white p-3 rounded-full hover:bg-purple-600 transition shadow-lg">
-                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </a>
                     </div>
-                </div>
-            </div>
 
-            <!-- PACKAGE 2: MEDIUM -->
-            <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl overflow-hidden hover:-translate-y-2 transition duration-300 border border-purple-200 ring-4 ring-purple-100 flex flex-col group relative z-10 transform md:-translate-y-4">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></div>
-                <div class="h-56 bg-gray-200 relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Party setup">
-                    <div class="absolute top-4 right-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                        BEST VALUE
-                    </div>
-                </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <h3 class="text-2xl font-bold mb-2">Party Starter</h3>
-                    <p class="text-sm text-gray-500 mb-6 uppercase tracking-wide font-semibold">Weddings & DJ Nights</p>
-                    
-                    <ul class="space-y-4 mb-8 flex-1 text-sm md:text-base text-gray-700">
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="speaker" class="w-5 h-5 text-purple-600 shrink-0"></i>
-                            2x Tops + 2x Subwoofers
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="mic-2" class="w-5 h-5 text-purple-600 shrink-0"></i>
-                            2x Wireless Microphones
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="disc" class="w-5 h-5 text-purple-600 shrink-0"></i>
-                            DJ Console Ready
-                        </li>
-                    </ul>
-
-                    <div class="flex items-end justify-between border-t pt-6">
-                        <div>
-                            <span class="text-xs text-gray-500 uppercase font-semibold">Daily Rate</span>
-                            <div class="text-2xl font-bold text-gray-900">₹12,000</div>
+                    <!-- RIGHT: Social Proof Ticker -->
+                    <div class="col-span-1 py-4 md:py-6 px-4 flex flex-col justify-center overflow-hidden relative">
+                        <p class="text-[10px] md:text-xs uppercase tracking-widest text-gray-400 mb-2 md:mb-3 font-bold text-center">Trusted By Venues</p>
+                        
+                        <!-- Ticker Mask -->
+                        <div class="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_64px,_black_calc(100%-64px),transparent_100%)] md:[mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+                            <ul class="flex items-center justify-center md:justify-start [&_li]:mx-4 md:[&_li]:mx-8 [&_img]:max-w-none animate-scroll">
+                                <!-- Venue List (Doubled for infinite scroll loop) -->
+                                <li class="text-base md:text-lg font-bold text-gray-400 whitespace-nowrap">Marriott Siliguri</li>
+                                <li class="text-base md:text-lg font-bold text-gray-400 whitespace-nowrap">Hi-Spirits</li>
+                                <li class="text-base md:text-lg font-bold text-gray-400 whitespace-nowrap">Hashtag</li>
+                                <li class="text-base md:text-lg font-bold text-gray-400 whitespace-nowrap">Montana Vista</li>
+                                <li class="text-base md:text-lg font-bold text-gray-400 whitespace-nowrap">Courtyard</li>
+                                <!-- Duplicate -->
+                                <li class="text-base md:text-lg font-bold text-gray-400 whitespace-nowrap">Marriott Siliguri</li>
+                                <li class="text-base md:text-lg font-bold text-gray-400 whitespace-nowrap">Hi-Spirits</li>
+                                <li class="text-base md:text-lg font-bold text-gray-400 whitespace-nowrap">Hashtag</li>
+                                <li class="text-base md:text-lg font-bold text-gray-400 whitespace-nowrap">Montana Vista</li>
+                                <li class="text-base md:text-lg font-bold text-gray-400 whitespace-nowrap">Courtyard</li>
+                            </ul>
                         </div>
-                        <a href="https://wa.me/917872392502?text=I'm%20interested%20in%20the%20Party%20Starter%20package" target="_blank" class="bg-purple-600 text-white p-3 rounded-full hover:bg-purple-700 transition shadow-lg">
-                            <i data-lucide="check" class="w-5 h-5"></i>
-                        </a>
                     </div>
-                </div>
-            </div>
 
-            <!-- PACKAGE 3: BIG -->
-            <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl overflow-hidden hover:-translate-y-2 transition duration-300 border border-gray-100 flex flex-col group">
-                <div class="h-56 bg-gray-200 relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Concert setup">
                 </div>
-                <div class="p-8 flex-1 flex flex-col">
-                    <h3 class="text-2xl font-bold mb-2">Concert Grade</h3>
-                    <p class="text-sm text-gray-500 mb-6 uppercase tracking-wide font-semibold">Large Crowds & Live Bands</p>
-                    
-                    <ul class="space-y-4 mb-8 flex-1 text-sm md:text-base text-gray-700">
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="speaker" class="w-5 h-5 text-purple-600 shrink-0"></i>
-                            Full Line Array System
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="settings-2" class="w-5 h-5 text-purple-600 shrink-0"></i>
-                            Digital Mixer + Monitors
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i data-lucide="zap" class="w-5 h-5 text-purple-600 shrink-0"></i>
-                            Stage Lighting Truss
-                        </li>
-                    </ul>
-
-                    <div class="flex items-end justify-between border-t pt-6">
-                        <div>
-                            <span class="text-xs text-gray-500 uppercase font-semibold">Daily Rate</span>
-                            <div class="text-xl font-bold text-gray-900">Custom</div>
-                        </div>
-                        <a href="https://wa.me/917872392502?text=I'm%20interested%20in%20the%20Concert%20Grade%20setup" target="_blank" class="bg-gray-900 text-white p-3 rounded-full hover:bg-purple-600 transition shadow-lg">
-                            <i data-lucide="mail" class="w-5 h-5"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- CUSTOMIZATION SECTION -->
-    <section id="custom" class="bg-slate-900 text-white py-24 px-4 border-t border-slate-800">
-        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12">
-            <div class="md:w-1/2">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Need something specific? <br><span class="text-purple-400">We got you.</span></h2>
-                <p class="text-gray-400 text-lg mb-8 leading-relaxed">
-                    Mixers, IEMs, specific mics, or backline gear. Build your custom rig and get an instant availability check via our bot.
-                </p>
-                <div class="flex gap-6">
-                    <div class="flex items-center gap-3 text-sm text-gray-300 bg-slate-800 px-4 py-2 rounded-full">
-                        <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i> Quality Checked
-                    </div>
-                    <div class="flex items-center gap-3 text-sm text-gray-300 bg-slate-800 px-4 py-2 rounded-full">
-                        <i data-lucide="truck" class="w-5 h-5 text-blue-400"></i> Logistics Included
-                    </div>
-                </div>
-            </div>
-            <div class="md:w-1/2 w-full bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-2xl">
-                <!-- Simple Form acting as a lead gen -->
-                <form class="space-y-4" onsubmit="event.preventDefault(); window.open('https://wa.me/917872392502?text=I%20want%20a%20custom%20quote', '_blank');">
-                    <input type="text" placeholder="Your Name" class="w-full bg-slate-900 text-white p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 border border-slate-700 transition">
-                    <select class="w-full bg-slate-900 text-gray-300 p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 border border-slate-700 transition">
-                        <option>Select Equipment Type</option>
-                        <option>Full PA System</option>
-                        <option>DJ Gear Only</option>
-                        <option>Lighting Rig</option>
-                        <option>Backline (Drums/Amps)</option>
-                    </select>
-                    <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl transition transform hover:scale-[1.02] shadow-lg shadow-purple-900/50">
-                        Get Custom Quote
-                    </button>
-                </form>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- CONTACT / FOOTER -->
-    <section id="contact" class="bg-slate-50 py-16 px-4">
-        <div class="max-w-4xl mx-auto text-center text-slate-900">
-            <h2 class="text-3xl font-bold mb-8">Get in Touch</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                <!-- Phone -->
-                <div class="flex flex-col items-center group cursor-pointer" onclick="window.open('https://wa.me/917872392502')">
-                    <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition shadow-md">
-                        <i data-lucide="phone" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="font-bold mb-1 text-lg">Call or WhatsApp</h3>
-                    <p class="text-gray-500 group-hover:text-purple-600 transition font-medium">+91 78723 92502</p>
-                </div>
-                <!-- Visit -->
-                <div class="flex flex-col items-center group">
-                    <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition shadow-md">
-                        <i data-lucide="map-pin" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="font-bold mb-1 text-lg">Visit Us</h3>
-                    <p class="text-gray-500">Sevoke Road, Siliguri</p>
-                </div>
-                <!-- Email -->
-                <div class="flex flex-col items-center group cursor-pointer" onclick="window.location.href='mailto:upeshb92@gmail.com'">
-                    <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition shadow-md">
-                        <i data-lucide="mail" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="font-bold mb-1 text-lg">Email</h3>
-                    <p class="text-gray-500 group-hover:text-purple-600 transition font-medium">upeshb92@gmail.com</p>
-                </div>
-            </div>
-            
-            <div class="text-sm text-gray-400">
-                &copy; 2025 Soundgasm. All rights reserved.
-            </div>
+    <!-- RECENT BOOKING POPUP (Dynamic JS) -->
+    <!-- Updated Positioning: Top Center on Mobile, Bottom Right on Desktop -->
+    <!-- Changed bg-white to glass-popup and removed border-l-4 -->
+    <div id="booking-notification" class="fixed z-50 flex items-center gap-3 glass-popup text-white p-3 md:p-4 rounded-xl shadow-2xl max-w-xs transform transition-all duration-500 hidden 
+         top-24 left-1/2 -translate-x-1/2 w-[90%] md:w-auto md:top-auto md:left-auto md:bottom-4 md:right-4 md:translate-x-0">
+        <!-- Changed icon background to be semi-transparent -->
+        <div class="bg-indigo-600/30 p-2 rounded-full flex-shrink-0">
+            <i data-lucide="check-circle" class="w-5 h-5 text-indigo-300"></i>
         </div>
-    </section>
-
-    <!-- DIRECT CHAT WIDGET -->
-    <div class="fixed bottom-6 right-6 layer-popup flex flex-col items-end font-sans">
-        
-        <!-- Chat Window -->
-        <div id="chat-window" class="hidden bg-white w-80 h-[450px] rounded-2xl shadow-2xl border border-gray-200 mb-4 flex flex-col overflow-hidden animate-enter transform origin-bottom-right">
-            <!-- Header -->
-            <div class="bg-slate-900 text-white p-4 border-b flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="relative">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 flex items-center justify-center">
-                            <i data-lucide="bot" class="w-6 h-6 text-white"></i>
-                        </div>
-                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-sm">Soundgasm AI</h4>
-                        <p class="text-xs text-gray-300">Replies Instantly</p>
-                    </div>
-                </div>
-                <button onclick="toggleChat()" class="text-gray-400 hover:text-white transition bg-transparent border-0 p-1 cursor-pointer">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-            
-            <!-- Messages Area -->
-            <div id="chat-messages" class="flex-1 bg-gray-50 p-4 overflow-y-auto space-y-4">
-                <!-- Intro Message -->
-                <div class="flex items-start gap-2 animate-enter">
-                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 flex-shrink-0 flex items-center justify-center text-xs font-bold text-white">AI</div>
-                    <div class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm text-sm text-gray-700 border border-gray-100">
-                        👋 Hi! I'm your Soundgasm assistant. Ask me about:
-                        <ul class="mt-2 list-disc list-inside text-gray-500 text-xs">
-                            <li>Prices</li>
-                            <li>Wedding Packages</li>
-                            <li>Custom quotes</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Input Area -->
-            <div class="p-3 bg-white border-t flex gap-2 items-center">
-                <input type="text" id="chat-input" placeholder="Type message..." class="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all text-slate-900">
-                <button id="send-btn" onclick="sendMessage()" class="bg-purple-600 text-white p-2 rounded-full hover:bg-purple-700 active:scale-95 flex items-center justify-center transition-all shadow-sm cursor-pointer border-0">
-                    <i data-lucide="send" class="w-4 h-4"></i>
-                </button>
-            </div>
+        <div>
+            <p class="text-xs md:text-sm font-bold" id="notification-text">Rahul just booked the Party Starter!</p>
+            <!-- Changed text color for better contrast on glass -->
+            <p class="text-[10px] md:text-xs text-indigo-200">2 minutes ago in Hakim Para</p>
         </div>
-
-        <!-- Chat Trigger -->
-        <button onclick="toggleChat()" class="bg-slate-900 text-white p-4 rounded-full shadow-2xl hover:shadow-purple-500/50 transition transform hover:scale-105 border-2 border-purple-500 flex items-center gap-3 group cursor-pointer z-50">
-            <i data-lucide="message-square" class="w-6 h-6 group-hover:rotate-12 transition"></i>
-            <span class="font-bold pr-1">Chat now</span>
+        <button onclick="closeNotification()" class="absolute top-1 right-1 text-indigo-200 hover:text-white">
+            <i data-lucide="x" class="w-3 h-3"></i>
         </button>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // 1. Initialize Icons
+        // Initialize Icons
         lucide.createIcons();
 
-        // 2. Chat Logic Variables
-        const chatWindow = document.getElementById('chat-window');
-        const chatInput = document.getElementById('chat-input');
-        const chatMessages = document.getElementById('chat-messages');
-        let isChatOpen = false;
-
-        // 3. Toggle Chat Function
-        function toggleChat(forceOpen = false) {
-            if (forceOpen) {
-                chatWindow.classList.remove('hidden');
-                isChatOpen = true;
+        // Navbar Scroll Effect
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-black/90', 'backdrop-blur-sm', 'shadow-md');
             } else {
-                chatWindow.classList.toggle('hidden');
-                isChatOpen = !isChatOpen;
-            }
-            
-            if(isChatOpen) {
-                setTimeout(() => chatInput.focus(), 100);
-            }
-        }
-
-        // 4. Send Message Function
-        function sendMessage() {
-            const text = chatInput.value.trim();
-            if (!text) return;
-
-            // Add User Message
-            addMessage(text, 'user');
-            chatInput.value = '';
-
-            // Show Typing Indicator
-            showTyping();
-
-            // Simulate AI Delay & Response
-            setTimeout(() => {
-                removeTyping();
-                const botResponse = getBotResponse(text.toLowerCase());
-                addMessage(botResponse, 'bot');
-            }, 800); 
-        }
-
-        // 5. Add Message to DOM
-        function addMessage(text, sender) {
-            const isUser = sender === 'user';
-            
-            const html = `
-                <div class="flex items-start gap-2 ${isUser ? 'flex-row-reverse' : ''} animate-enter">
-                    ${!isUser ? `<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 flex-shrink-0 flex items-center justify-center text-xs font-bold text-white">AI</div>` : ''}
-                    <div class="${isUser ? 'bg-purple-600 text-white' : 'bg-white text-gray-700 border border-gray-100'} p-3 rounded-lg ${isUser ? 'rounded-tr-none' : 'rounded-tl-none'} shadow-sm text-sm">
-                        ${text}
-                    </div>
-                </div>
-            `;
-            
-            chatMessages.insertAdjacentHTML('beforeend', html);
-            scrollToBottom();
-        }
-
-        // 6. Typing Indicator
-        function showTyping() {
-            const html = `
-                <div id="typing-indicator" class="flex items-start gap-2 animate-enter">
-                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 flex-shrink-0 flex items-center justify-center text-xs font-bold text-white">AI</div>
-                    <div class="bg-white p-4 rounded-lg rounded-tl-none shadow-sm border border-gray-100 flex items-center">
-                        <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
-                    </div>
-                </div>
-            `;
-            chatMessages.insertAdjacentHTML('beforeend', html);
-            scrollToBottom();
-        }
-
-        function removeTyping() {
-            const indicator = document.getElementById('typing-indicator');
-            if (indicator) indicator.remove();
-        }
-
-        function scrollToBottom() {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // 7. SMART BOT LOGIC
-        function getBotResponse(input) {
-            if (input.includes('price') || input.includes('cost') || input.includes('rate')) {
-                return "Packages start at <b>₹3,500/day</b> (Small) and <b>₹12,000/day</b> (Weddings). <br><br>Need a full price list?";
-            }
-            if (input.includes('wedding') || input.includes('marriage')) {
-                return "For weddings, the <b>Party Starter</b> package (₹12,000) is best. It includes 4 speakers, wireless mics, and subs.";
-            }
-            if (input.includes('birthday') || input.includes('party')) {
-                return "The <b>Intimate Vibe</b> (₹3,500) is great for parties. Just plug in your phone or laptop!";
-            }
-            if (input.includes('contact') || input.includes('number') || input.includes('whatsapp')) {
-                return "Call or WhatsApp us at: <br><b><a href='https://wa.me/917872392502' class='text-blue-600 underline'>+91 78723 92502</a></b>";
-            }
-            if (input.includes('hi') || input.includes('hello')) {
-                return "Hey there! How can I help you with your event sound today?";
-            }
-            return "I'm a bot, but our team is human! <br><br>👉 <a href='https://wa.me/917872392502' class='text-blue-600 font-bold hover:underline'>Click here to WhatsApp us</a> for an instant answer.";
-        }
-
-        // 8. Event Listener for "Enter" key
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                sendMessage();
+                nav.classList.remove('bg-black/90', 'backdrop-blur-sm', 'shadow-md');
             }
         });
+
+        // Dynamic "Recent Booking" Logic
+        const names = ["Rahul", "Priya", "Amit", "Sneha", "Vikram", "Anjali"];
+        const packages = ["Party Starter", "Wedding Bass Rig", "Live Band Kit", "DJ Console Pro"];
+        const locations = ["Hakim Para", "Sevoke Road", "City Center", "Pradhan Nagar"];
+        const notificationEl = document.getElementById('booking-notification');
+        const textEl = document.getElementById('notification-text');
+
+        function showNotification() {
+            // Generate random data
+            const name = names[Math.floor(Math.random() * names.length)];
+            const pkg = packages[Math.floor(Math.random() * packages.length)];
+            const loc = locations[Math.floor(Math.random() * locations.length)];
+            
+            // Update Text
+            // Changed span color to indigo-300 for better contrast
+            textEl.innerHTML = `${name} just booked the <span class="text-indigo-300">${pkg}</span>!`;
+            notificationEl.querySelector('p:last-child').textContent = `Just now in ${loc}`;
+
+            // Show
+            notificationEl.classList.remove('hidden');
+            notificationEl.classList.add('booking-popup');
+            notificationEl.classList.remove('hiding');
+
+            // Hide after 5 seconds
+            setTimeout(() => {
+                notificationEl.classList.add('hiding');
+                setTimeout(() => {
+                    notificationEl.classList.add('hidden');
+                    notificationEl.classList.remove('booking-popup');
+                }, 500); // Wait for fadeOut
+            }, 5000);
+        }
+
+        function closeNotification() {
+            notificationEl.classList.add('hidden');
+        }
+
+        // Trigger notification periodically
+        setTimeout(showNotification, 3000); // First one after 3s
+        setInterval(showNotification, 15000); // Repeat every 15s
+
     </script>
 </body>
 </html>
